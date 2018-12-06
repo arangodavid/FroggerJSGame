@@ -1,9 +1,5 @@
 var Obstacle = function(x, y, mph) {
-    //testing git commit contributions
-    //test #2...set up email address in terminal and on github.com
-    //Test #3
-    // Test #4 re-initialized repo
-    //Test #5 accesed dot .gitconfig file to re-write my email address
+ //Testing git contributions 
     this.x = 400;
     this.y = 300;
 
