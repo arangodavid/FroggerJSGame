@@ -1,8 +1,7 @@
 var Obstacle = function(x, y, mph) {
- //Testing git contributions 
     this.x = 400;
     this.y = 300;
-
+    this.mph = Math.floor(Math.random() * 100);
     this.cover = 'images/enemy-bug.png';
 };
 
