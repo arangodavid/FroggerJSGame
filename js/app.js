@@ -2,7 +2,7 @@ var Obstacle = function(x, y, mph) {
  //Final Test git contributions 
     this.x = 400;
     this.y = 300;
-
+    this.mph = Math.random() * 100;
     this.cover = 'images/enemy-bug.png';
 };
 
