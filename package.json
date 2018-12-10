@@ -1,0 +1,32 @@
+{
+  "name": "frogger_js_game",
+  "version": "1.0.0",
+  "description": "FROGGER_A_PSEUDOCLASSICAL_OOP_JS_GAME",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arangodavid/FroggerJSGame.git"
+  },
+  "keywords": [
+    "pseudoclassical",
+    "oop",
+    "frogger",
+    "js",
+    "game",
+    "oop",
+    "game"
+  ],
+  "author": "DAVID ARANGO (https://github.com/arangodavid)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/arangodavid/FroggerJSGame/issues"
+  },
+  "homepage": "https://github.com/arangodavid/FroggerJSGame#readme",
+  "devDependencies": {
+    "grunt": "^1.0.3",
+    "grunt-contrib-uglify": "^4.0.0"
+  }
+}
