@@ -27,6 +27,7 @@
   "homepage": "https://github.com/arangodavid/FroggerJSGame#readme",
   "devDependencies": {
     "grunt": "^1.0.3",
-    "grunt-contrib-uglify": "^4.0.0"
+    "grunt-contrib-uglify": "^4.0.0",
+    "grunt-contrib-watch": "^1.1.0"
   }
 }

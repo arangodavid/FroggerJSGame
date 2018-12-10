@@ -6,10 +6,20 @@ module.exports = function(grunt) {
 				src: 'js/app.js',
 				dest: 'js/app.min.js'
 			}
+		},
+		watch: {
+			scripts: {
+				files: ['js/app.js'],
+				tasks: ['uglify'],
+				options: {
+					spawn: false
+				}
+			}
 		}
 	});
 
 	grunt.loadNpmTasks('grunt-contrib-uglify');
+	grunt.loadNpmTasks('grunt-contrib-watch');
 
-	grunt.registerTask('default', ['uglify']);
+	grunt.registerTask('default', ['uglify', 'watch']);
 }
