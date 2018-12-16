@@ -2,7 +2,7 @@
   "name": "frogger_js_game",
   "version": "1.0.0",
   "description": "FROGGER_A_PSEUDOCLASSICAL_OOP_JS_GAME",
-  "main": "index.js",
+  "main": "js/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -27,6 +27,8 @@
   "homepage": "https://github.com/arangodavid/FroggerJSGame#readme",
   "devDependencies": {
     "grunt": "^1.0.3",
+    "grunt-browser-sync": "^2.2.0",
+    "grunt-contrib-sass": "^1.0.0",
     "grunt-contrib-uglify": "^4.0.0",
     "grunt-contrib-watch": "^1.1.0"
   }
