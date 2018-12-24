@@ -50,6 +50,7 @@ body {
 	position: absolute;
 	height: 100%;
 	width: 75%;
+	z-index: 1; //Bugs were moving under tiles
 }
 /*.water_img,
 .stone_img,

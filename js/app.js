@@ -10,6 +10,8 @@
 
 	var	Obstacle = function() {
 	    this.cover = 'images/enemy-bug.png';
+	    this.x = 0;
+	    this.obstaclesOnBoard = [];
 	};
 
 	Obstacle.prototype.createElement = function() {
@@ -27,15 +29,17 @@
 		}else {
 			console.log('Oops, looks like there\'s already an obstacle here');
 		};
+		this.obstaclesOnBoard.push(obstacle);
 	};
 
 	Obstacle.prototype.addObstacles = function() {
 		var obstacleCounter = 0,
 			$this = this;
 		function clear() {
-			if(obstacleCounter >= 12) {
+			if(obstacleCounter >= 12) { //Desired # of obstacles on the board at one time
 				clearInterval(repeatObstacle);
 				startButton.disabled = false;
+				$this.update();
 			}
 		};
 		var repeatObstacle = setInterval(function() {
@@ -44,12 +48,17 @@
 			clear();
 		}, 100);
 	};
-	// Obstacle.prototype.checkDuplicates = function() {
-
-	// }
-	// Obstacle.prototype.update = function(direction) {
-
-	// };
+	Obstacle.prototype.update = function() {
+		var $this = this;
+		setInterval(function() {
+			$this.x++;
+			var movement = $this.x + '%';
+			$this.obstaclesOnBoard.forEach(function(el, i) {
+				el.style.left = movement;
+				// $this.checkObstaclePos();
+			});
+		}, 7);
+	};
 // document.addEventListener('keyup', function(e) {
 //     var allowedKeys = {
 //         37: 'left',
@@ -67,7 +76,6 @@ function reset() {
 		el.parentNode.removeChild(el);
 	});
 };
-
 function run() {
 	gameOn = !gameOn;
 	var test = new Obstacle();
