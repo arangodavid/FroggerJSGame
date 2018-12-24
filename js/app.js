@@ -7,14 +7,50 @@
 		stoneBarsArray = Array.prototype.slice.call(stoneBarsHtmlCollection),
 		stoneBlocksArray = Array.prototype.slice.call(stoneBlocksHtmlCollection),
 		startButton = document.getElementById('start');
-
-	var	Obstacle = function(loc) {
-		this.loc = loc;
+console.dir(startButton);
+	var	Obstacle = function() {
 	    this.cover = 'images/enemy-bug.png';
 	};
-// Obstacle.prototype.update = function(direction) {
-	
-// };
+
+	Obstacle.prototype.createElement = function() {
+		var obstacle = document.createElement('img');
+		obstacle.src = this.cover;
+		obstacle.className = 'obstacle';
+		this.enterGame(obstacle);
+	};
+
+	Obstacle.prototype.enterGame = function(obstacle) {
+		var loc = Math.floor(Math.random() * 20); //20 = stoneBlocksArray.length + 1
+
+		if(stoneBlocksArray[loc].contains(obstacle)) {
+			// this.enterGame();
+			console.log('Oops, there\'s already an obstacle there');
+		}else {
+			stoneBlocksArray[loc].appendChild(obstacle);
+		}
+	};
+
+	Obstacle.prototype.addObstacles = function() {
+		var obstacleCounter = 0,
+			$this = this;
+		function clear() {
+			if(obstacleCounter >= 12) {
+				clearInterval(repeatObstacle);
+				startButton.disabled = false;
+			}
+		}
+		var repeatObstacle = setInterval(function() {
+			obstacleCounter++;
+			$this.createElement();
+			clear();
+		}, 100);
+	}
+	// Obstacle.prototype.checkDuplicates = function() {
+
+	// }
+	// Obstacle.prototype.update = function(direction) {
+
+	// };
 // document.addEventListener('keyup', function(e) {
 //     var allowedKeys = {
 //         37: 'left',
@@ -25,40 +61,23 @@
 
 //     player.handleInput(allowedKeys[e.keyCode]);
 // });
-
-function setObstacles() {
-	stoneBarsArray.forEach(function(el, i) {//loops through each stone bar
-		// var locationArray = [],
-			var obstacleCount = Math.floor(1 + Math.random() * 3), //A random # of obstacles, between 0-4
-			barSquaresArray = Array.prototype.slice.call(el.children); ///Each stone block per stone bar
-		el.obstacleCount = obstacleCount; //Setting obstacleCount as a property of each stone bar(serves good for future reference)
-		
-		for(var i = 1; i<=el.obstacleCount; i++) {
-			var loc = Math.floor(Math.random() * 5),//A random # from 0-4, will be relative to barSquaresArray
-				obstacle = new Obstacle(loc),
-				domObstacle = document.createElement('img');
-			domObstacle.properties = obstacle;
-			domObstacle.src = domObstacle.properties.cover;
-			domObstacle.className = 'obstacle';
-			// locationArray.push(loc);
-			barSquaresArray[loc].appendChild(domObstacle);
-		};
-	});
-};
 function reset() {
 	var obstacles = document.getElementsByClassName('obstacle'),
 		obstacleArray = Array.prototype.slice.call(obstacles);
 	obstacleArray.forEach(function(el, i) {
 		el.parentNode.removeChild(el);
 	});
-}
+};
+
 function run() {
 	gameOn = !gameOn;
+	var test = new Obstacle();
 	if(gameOn) {
+		startButton.disabled = true;
+		console.dir(startButton);
 		startButton.innerHTML = 'RESET';
-		setObstacles();
-	} 
-	else {
+		test.addObstacles();
+	}else {
 		startButton.innerHTML = 'START GAME';
 		reset();
 	}
