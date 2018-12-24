@@ -48,7 +48,8 @@ body {
 .obstacle {
   position: absolute;
   height: 100%;
-  width: 75%; }
+  width: 75%;
+  z-index: 1; }
 
 /*.water_img,
 .stone_img,
