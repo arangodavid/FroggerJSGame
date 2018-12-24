@@ -7,7 +7,7 @@
 		stoneBarsArray = Array.prototype.slice.call(stoneBarsHtmlCollection),
 		stoneBlocksArray = Array.prototype.slice.call(stoneBlocksHtmlCollection),
 		startButton = document.getElementById('start');
-console.dir(startButton);
+
 	var	Obstacle = function() {
 	    this.cover = 'images/enemy-bug.png';
 	};
@@ -21,13 +21,12 @@ console.dir(startButton);
 
 	Obstacle.prototype.enterGame = function(obstacle) {
 		var loc = Math.floor(Math.random() * 20); //20 = stoneBlocksArray.length + 1
-
-		if(stoneBlocksArray[loc].contains(obstacle)) {
-			// this.enterGame();
-			console.log('Oops, there\'s already an obstacle there');
-		}else {
+		var obstacleSiblings = Array.prototype.slice.call(stoneBlocksArray[loc].children);
+		if(obstacleSiblings.length === 0) {
 			stoneBlocksArray[loc].appendChild(obstacle);
-		}
+		}else {
+			console.log('Oops, looks like there\'s already an obstacle here');
+		};
 	};
 
 	Obstacle.prototype.addObstacles = function() {
@@ -38,13 +37,13 @@ console.dir(startButton);
 				clearInterval(repeatObstacle);
 				startButton.disabled = false;
 			}
-		}
+		};
 		var repeatObstacle = setInterval(function() {
 			obstacleCounter++;
 			$this.createElement();
 			clear();
 		}, 100);
-	}
+	};
 	// Obstacle.prototype.checkDuplicates = function() {
 
 	// }
@@ -74,7 +73,6 @@ function run() {
 	var test = new Obstacle();
 	if(gameOn) {
 		startButton.disabled = true;
-		console.dir(startButton);
 		startButton.innerHTML = 'RESET';
 		test.addObstacles();
 	}else {
