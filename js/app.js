@@ -11,7 +11,7 @@
 	var	Obstacle = function() {
 	    this.cover = 'images/enemy-bug.png';
 	    this.x = 0;
-	    this.obstaclesOnBoard = [];
+	    // this.obstaclesOnBoard = [];
 	};
 
 	Obstacle.prototype.createElement = function() {
@@ -22,42 +22,43 @@
 	};
 
 	Obstacle.prototype.enterGame = function(obstacle) {
-		var loc = Math.floor(Math.random() * 20); //20 = stoneBlocksArray.length + 1
-		var obstacleSiblings = Array.prototype.slice.call(stoneBlocksArray[loc].children);
-		if(obstacleSiblings.length === 0) {
-			stoneBlocksArray[loc].appendChild(obstacle);
-		}else {
-			console.log('Oops, looks like there\'s already an obstacle here');
-		};
-		this.obstaclesOnBoard.push(obstacle);
+		var loc = Math.floor(Math.random() * 4);
+		var locToAddObstacle = stoneBarsArray[loc].children[0]; //random 1 of 4 rows to add an obstacle
+			// numOfObstacles = stoneBarsArray[loc].children[0].children.length;
+		// if(numOfObstacles > 0) {
+			// console.log('There\'s already an obstacle here');
+		// }else {
+			locToAddObstacle.appendChild(obstacle);
+			this.update(obstacle);
+		// };
+		// this.obstaclesOnBoard.push(obstacle);
 	};
 
 	Obstacle.prototype.addObstacles = function() {
 		var obstacleCounter = 0,
 			$this = this;
-		function clear() {
-			if(obstacleCounter >= 12) { //Desired # of obstacles on the board at one time
-				clearInterval(repeatObstacle);
-				startButton.disabled = false;
-				$this.update();
-			}
-		};
+		// function clear() {
+		// 	if(obstacleCounter >= 12) { //Desired # of obstacles on the board at one time
+		// 		clearInterval(repeatObstacle);
+		// 		startButton.disabled = false;
+		// 		$this.update();
+		// 	}
+		// };
 		var repeatObstacle = setInterval(function() {
 			obstacleCounter++;
 			$this.createElement();
-			clear();
-		}, 100);
+			// clear();
+		}, 1000);
 	};
-	Obstacle.prototype.update = function() {
-		var $this = this;
+	Obstacle.prototype.update = function(obstacle) {
+		var boost = Math.floor(1 + Math.random() * 3),
+			obstacleOnBoard = obstacle,
+			xAxis = 0;
 		setInterval(function() {
-			$this.x++;
-			var movement = $this.x + '%';
-			$this.obstaclesOnBoard.forEach(function(el, i) {
-				el.style.left = movement;
-				// $this.checkObstaclePos();
-			});
-		}, 7);
+			xAxis++;
+			var movement = xAxis + '%';
+			obstacleOnBoard.style.left = movement;
+		}, 10);
 	};
 // document.addEventListener('keyup', function(e) {
 //     var allowedKeys = {
@@ -80,7 +81,7 @@ function run() {
 	gameOn = !gameOn;
 	var test = new Obstacle();
 	if(gameOn) {
-		startButton.disabled = true;
+		// startButton.disabled = true;
 		startButton.innerHTML = 'RESET';
 		test.addObstacles();
 	}else {
