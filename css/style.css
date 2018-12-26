@@ -34,16 +34,16 @@ body {
   position: relative; }
 
 .water_block {
-  box-shadow: 1rem 1rem 1rem #0abde3;
-  background: #48dbfb; }
+  box-shadow: 1rem 1rem 1rem #B53471;
+  background: #ED4C67; }
 
 .stone_block {
   box-shadow: 1rem 1rem 1rem #8395a7;
-  background: #c8d6e5; }
+  background: #f1f2f6; }
 
 .land_block {
-  box-shadow: 1rem 1rem 1rem #10ac84;
-  background: #1dd1a1; }
+  box-shadow: 1rem 1rem 1rem #2ed573;
+  background: #7bed9f; }
 
 .obstacle {
   position: absolute;
