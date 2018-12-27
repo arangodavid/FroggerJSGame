@@ -16,7 +16,7 @@ body {
 	margin: 1rem auto;
 	box-shadow: inset .1rem .1rem 2rem red;
 	padding: 1rem 1rem 2rem 1rem;
-	// overflow: hidden;
+	overflow: hidden;
 	.bar,
 	.grid {
 		display: flex;
@@ -30,8 +30,8 @@ body {
 .land_block {
 	min-width: calc(100% / 5 - .5rem);
 	max-width: calc(100% / 5 - .5rem);
+	min-height: 5rem;
 	max-height: 5rem;
-	height: 5rem;
 	margin: .125rem;
 	position: relative;
 }
@@ -47,10 +47,11 @@ body {
 	box-shadow: 1rem 1rem 1rem #2ed573;
 	background: #7bed9f; 
 }
-.obstacle {
+.obstacle,
+.player {
 	position: absolute;
 	height: 100%;
-	width: 75%;
+	width: 100%;
 	z-index: 1; //Bugs were moving under tiles
 }
 /*.water_img,

@@ -8,14 +8,15 @@
 (function() {
 	'use strict'
 	var gameOn = false,
-		landGrid = document.getElementById('stone-grid'),
 		stoneBarsHtmlCollection = document.getElementsByClassName('stone_bar'),
 		stoneBlocksHtmlCollection = document.getElementsByClassName('stone_block'),
+		landBarsHtmlCollection = document.getElementsByClassName('land_bar'),
 		stoneBarsArray = Array.prototype.slice.call(stoneBarsHtmlCollection),
 		stoneBlocksArray = Array.prototype.slice.call(stoneBlocksHtmlCollection),
+		landBarsArray = Array.prototype.slice.call(landBarsHtmlCollection),
+		stoneBarBounding = stoneBarsArray[0].getBoundingClientRect(),
 		startButton = document.getElementById('start'),
 		repeatObstacles;
-		var stoneBarBounding = stoneBarsArray[0].getBoundingClientRect();
 
 	var	Obstacle = function() {
 	    this.cover = 'images/bug.png';
@@ -67,32 +68,46 @@
 			el.parentNode.removeChild(el);
 		});
 	};
-	// function Player(name) {
+	function Player() {
+		this.cover = 'images/boy.png';
+	}
+	Player.prototype.addPlayer = function() {
+		console.log(landBarsArray);
+		var playerEl = document.createElement('img'),
+			playerStartLoc = landBarsArray[0].children[2];
+		playerEl.src = this.cover;
+		playerEl.className = 'player';
+		playerStartLoc.appendChild(playerEl);
+	}
+	Player.prototype.handleInput = function(direction) {
+		switch(direction) {
 
-	// }
+		}
+	}
 	function run() {
 		gameOn = !gameOn;
-		var initiator = new Obstacle(); //The obstacle that starts it all...
+		var initObstacle = new Obstacle(), //The obstacle that starts it all...
+			initPlayer = new Player();
 		if(gameOn) {
 			startButton.innerHTML = 'RESET';
 			repeatObstacles = setInterval(function() {
-				initiator.createElement();
+				initObstacle.createElement();
 			}, 1000);
+			initPlayer.addPlayer();
 		}else {
 			startButton.innerHTML = 'START GAME';
 			clearInterval(repeatObstacles);
 			reset();
 		};
 	};
-
+	document.addEventListener('keyup', function(e) {
+	    // var allowedKeys = {
+	    //     37: 'left',
+	    //     38: 'up',
+	    //     39: 'right',
+	    //     40: 'down'
+	    // };
+	    // player.handleInput(allowedKeys[e.keyCode]);
+	});
 	startButton.addEventListener('click', run);
-	// document.addEventListener('keyup', function(e) {
-	//     var allowedKeys = {
-	//         37: 'left',
-	//         38: 'up',
-	//         39: 'right',
-	//         40: 'down'
-	//     };
-	//     player.handleInput(allowedKeys[e.keyCode]);
-	// });
 })();
