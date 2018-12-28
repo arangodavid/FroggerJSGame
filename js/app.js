@@ -1,7 +1,7 @@
 /*
 	FIX OBSTACLE ISSUES FIRST ***
 	NOTE: 1.) REMOVE ALL OBSTACLES AFTER THEY GO OUT OF BOUNDS ***
-	NOTE: 2.) START PLAYER CLASS
+	NOTE: 2.) START PLAYER CLASS ***
 	NOTE: 3.) PLAYER SHOULD BE ABLE TO MOVE BASED ON USER INPUT
 	NOTE 4.) CREATE FUNCTION TO CHECK FOR COLLISIONS
 */
@@ -44,7 +44,6 @@
 		this.obstaclesOnBoard.forEach(function(el, i) {
 			var elBounding = el.getBoundingClientRect();
 			if(elBounding.x > outOfBounds) {
-				console.log('out of bounds');
 				el.parentNode.removeChild(el);
 			};
 		});
@@ -70,30 +69,59 @@
 	};
 	function Player() {
 		this.cover = 'images/boy.png';
-	}
+		this.activePlayer;
+		this.xRange = stoneBarBounding.width;
+		this.moveLeft = this.xRange / 5;
+		this.moveLeft += 'px';
+	};
 	Player.prototype.addPlayer = function() {
-		console.log(landBarsArray);
 		var playerEl = document.createElement('img'),
 			playerStartLoc = landBarsArray[0].children[2];
 		playerEl.src = this.cover;
 		playerEl.className = 'player';
+		this.activePlayer = playerEl;
 		playerStartLoc.appendChild(playerEl);
 	}
+	// Player.prototype.movePlayer = function(rowWidth, divideBy) {
+		
+	// }
 	Player.prototype.handleInput = function(direction) {
+		//When moving the obstacle it should be calculated, get the width of the row from boundingclientrect and divide that by 5
 		switch(direction) {
+			case 'left':
+				// this.activePlayer.style.right += this.moveLeft;
+				// console.log(this.moveLeft);
+			break;
 
-		}
-	}
+			case 'up':
+				console.log('up');
+			break;
+
+			case 'right':
+				console.log('right');
+			break;
+
+			case 'down':
+				console.log('down');
+			break;
+
+			default:
+				console.log('other');
+			break;
+		};
+	};
+
+	var obstacle = new Obstacle(),
+			player = new Player();
+
 	function run() {
 		gameOn = !gameOn;
-		var initObstacle = new Obstacle(), //The obstacle that starts it all...
-			initPlayer = new Player();
 		if(gameOn) {
 			startButton.innerHTML = 'RESET';
 			repeatObstacles = setInterval(function() {
-				initObstacle.createElement();
+				obstacle.createElement();
 			}, 1000);
-			initPlayer.addPlayer();
+			player.addPlayer();
 		}else {
 			startButton.innerHTML = 'START GAME';
 			clearInterval(repeatObstacles);
@@ -101,13 +129,13 @@
 		};
 	};
 	document.addEventListener('keyup', function(e) {
-	    // var allowedKeys = {
-	    //     37: 'left',
-	    //     38: 'up',
-	    //     39: 'right',
-	    //     40: 'down'
-	    // };
-	    // player.handleInput(allowedKeys[e.keyCode]);
+	    var allowedKeys = {
+	        37: 'left',
+	        38: 'up',
+	        39: 'right',
+	        40: 'down'
+	    };
+	    player.handleInput(allowedKeys[e.keyCode]);
 	});
 	startButton.addEventListener('click', run);
 })();
