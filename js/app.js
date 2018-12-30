@@ -3,8 +3,12 @@
 	NOTE: 1.) REMOVE ALL OBSTACLES AFTER THEY GO OUT OF BOUNDS ***
 	NOTE: 2.) START PLAYER CLASS ***
 	NOTE: 3.) PLAYER SHOULD BE ABLE TO MOVE BASED ON USER INPUT ***
-	NOTE: 4.) PREVENT PLAYER FROM GOING OUT OF BOUNDS
-	NOTE 4.) CREATE FUNCTION TO CHECK FOR COLLISIONS
+	NOTE: 4.) PREVENT PLAYER FROM GOING OUT OF BOUNDS (not high priority)
+	NOTE 5.) CREATE FUNCTION TO CHECK FOR COLLISIONS (high priority)
+	NOTE 6.) RE-START PLAYER IF IT COLLIDES WITH OBSTACLES
+	NOTE 7.) GIVE PLAYER POINTS AND LIVES
+	NOTE 8.) CREATE A GAME STATE, FOR LEVELS
+	NOTE 9.) ADD NEW LEVELS, ADD COLLECTIBLES, EXTRA LIVES..
 */
 (function() {
 	'use strict'
@@ -49,6 +53,19 @@
 			};
 		});
 	};
+	Obstacle.prototype.handleCollision = function() {//THIS MIGHT HAVE TO BE A OBSTACLE FUNCTION
+		var obstaclesHtmlCollection = document.getElementsByClassName('obstacle'),
+			obstaclesArray = Array.prototype.slice.call(obstaclesHtmlCollection),
+			$this = this;
+		obstaclesArray.forEach(function(el, i) {
+			var elBounding = el.getBoundingClientRect(),
+				playerBounding = document.getElementById('player').getBoundingClientRect();
+			if(elBounding.y === playerBounding.y && elBounding.x >= playerBounding.x) { //THINK ABOUT THIS ONE THOROUGHLY
+				//needs to check for exact x-axis and y-axis
+				console.log('bump');		
+			};
+		});
+	};
 
 	Obstacle.prototype.update = function(obstacle) {
 		var obstacleOnBoard = obstacle,
@@ -59,6 +76,8 @@
 			obstacleOnBoard.style.left = movement;
 		}, 5);
 		this.outOfBounds();
+		this.handleCollision();
+		//CHECK FOR COLLISIONS HERE AS WELL...
 	};
 
 	function reset() {
@@ -72,8 +91,9 @@
 	function Player() {
 		this.cover = 'images/boy.png';
 		this.activePlayer;
-		this.range = stoneBarBounding.width;
-		this.move = this.range / 5;
+		this.rangeX = stoneBarBounding.width;
+		this.moveY = stoneBarBounding.height; //Does not need the same process as the x-axis
+		this.moveX = this.rangeX / 5 - 4;
 		this.jumpX = 0;
 		this.jumpY = 0;
 	};
@@ -85,35 +105,35 @@
 		playerEl.setAttribute('id',  'player');
 		this.activePlayer = playerEl;
 		playerStartLoc.appendChild(playerEl);
-	}
+	};
 	// Player.prototype.movePlayer = function(direction) {
 		
 	// }
 	Player.prototype.handleInput = function(direction) {
-		switch(direction) { //RE-FACTOR!!!!! INTO PLAYER FUNCTION ABOVE
+		switch(direction) { //RE-FACTOR!!!! INTO movePlayer FUNCTION ABOVE
 			case 'left':
-				var spaces = this.jumpX + this.move;
+				var spaces = this.jumpX + this.moveX;
 				this.jumpX = spaces;
 				var gameSpaces = this.jumpX + 'px';
 				this.activePlayer.style.right = gameSpaces;
 			break;
 
 			case 'up':
-				var spaces = this.jumpY + this.move;
+				var spaces = this.jumpY + this.moveY;
 				this.jumpY = spaces;
 				var gameSpaces = this.jumpY + 'px';
 				this.activePlayer.style.bottom = gameSpaces;
 			break;
 
 			case 'right':
-				var spaces = this.jumpX - this.move;
+				var spaces = this.jumpX - this.moveX;
 				this.jumpX = spaces;
 				var gameSpaces = this.jumpX + 'px';
 				this.activePlayer.style.right = gameSpaces;
 			break;
 
 			case 'down':
-				var spaces = this.jumpY - this.move;
+				var spaces = this.jumpY - this.moveY;
 				this.jumpY = spaces;
 				var gameSpaces = this.jumpY + 'px';
 				this.activePlayer.style.bottom = gameSpaces;
@@ -128,7 +148,7 @@
 	Player.prototype.removePlayer = function() {
 		var removePlayer = document.getElementById('player');
 		removePlayer.parentNode.removeChild(removePlayer);
-	}
+	};
 
 	var obstacle = new Obstacle(),
 			player = new Player();
