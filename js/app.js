@@ -2,7 +2,8 @@
 	FIX OBSTACLE ISSUES FIRST ***
 	NOTE: 1.) REMOVE ALL OBSTACLES AFTER THEY GO OUT OF BOUNDS ***
 	NOTE: 2.) START PLAYER CLASS ***
-	NOTE: 3.) PLAYER SHOULD BE ABLE TO MOVE BASED ON USER INPUT
+	NOTE: 3.) PLAYER SHOULD BE ABLE TO MOVE BASED ON USER INPUT ***
+	NOTE: 4.) PREVENT PLAYER FROM GOING OUT OF BOUNDS
 	NOTE 4.) CREATE FUNCTION TO CHECK FOR COLLISIONS
 */
 (function() {
@@ -43,7 +44,7 @@
 		var outOfBounds = stoneBarBounding.x + stoneBarBounding.width;
 		this.obstaclesOnBoard.forEach(function(el, i) {
 			var elBounding = el.getBoundingClientRect();
-			if(elBounding.x > outOfBounds) {
+			if(elBounding.x >= outOfBounds) {
 				el.parentNode.removeChild(el);
 			};
 		});
@@ -67,42 +68,55 @@
 			el.parentNode.removeChild(el);
 		});
 	};
+
 	function Player() {
 		this.cover = 'images/boy.png';
 		this.activePlayer;
-		this.xRange = stoneBarBounding.width;
-		this.moveLeft = this.xRange / 5;
-		this.moveLeft += 'px';
+		this.range = stoneBarBounding.width;
+		this.move = this.range / 5;
+		this.jumpX = 0;
+		this.jumpY = 0;
 	};
+
 	Player.prototype.addPlayer = function() {
 		var playerEl = document.createElement('img'),
 			playerStartLoc = landBarsArray[0].children[2];
 		playerEl.src = this.cover;
-		playerEl.className = 'player';
+		playerEl.setAttribute('id',  'player');
 		this.activePlayer = playerEl;
 		playerStartLoc.appendChild(playerEl);
 	}
-	// Player.prototype.movePlayer = function(rowWidth, divideBy) {
+	// Player.prototype.movePlayer = function(direction) {
 		
 	// }
 	Player.prototype.handleInput = function(direction) {
-		//When moving the obstacle it should be calculated, get the width of the row from boundingclientrect and divide that by 5
-		switch(direction) {
+		switch(direction) { //RE-FACTOR!!!!! INTO PLAYER FUNCTION ABOVE
 			case 'left':
-				// this.activePlayer.style.right += this.moveLeft;
-				// console.log(this.moveLeft);
+				var spaces = this.jumpX + this.move;
+				this.jumpX = spaces;
+				var gameSpaces = this.jumpX + 'px';
+				this.activePlayer.style.right = gameSpaces;
 			break;
 
 			case 'up':
-				console.log('up');
+				var spaces = this.jumpY + this.move;
+				this.jumpY = spaces;
+				var gameSpaces = this.jumpY + 'px';
+				this.activePlayer.style.bottom = gameSpaces;
 			break;
 
 			case 'right':
-				console.log('right');
+				var spaces = this.jumpX - this.move;
+				this.jumpX = spaces;
+				var gameSpaces = this.jumpX + 'px';
+				this.activePlayer.style.right = gameSpaces;
 			break;
 
 			case 'down':
-				console.log('down');
+				var spaces = this.jumpY - this.move;
+				this.jumpY = spaces;
+				var gameSpaces = this.jumpY + 'px';
+				this.activePlayer.style.bottom = gameSpaces;
 			break;
 
 			default:
@@ -111,12 +125,17 @@
 		};
 	};
 
+	Player.prototype.removePlayer = function() {
+		var removePlayer = document.getElementById('player');
+		removePlayer.parentNode.removeChild(removePlayer);
+	}
+
 	var obstacle = new Obstacle(),
 			player = new Player();
 
 	function run() {
 		gameOn = !gameOn;
-		if(gameOn) {
+		if(gameOn) {2
 			startButton.innerHTML = 'RESET';
 			repeatObstacles = setInterval(function() {
 				obstacle.createElement();
@@ -124,10 +143,12 @@
 			player.addPlayer();
 		}else {
 			startButton.innerHTML = 'START GAME';
+			player.removePlayer();
 			clearInterval(repeatObstacles);
 			reset();
 		};
 	};
+
 	document.addEventListener('keyup', function(e) {
 	    var allowedKeys = {
 	        37: 'left',
@@ -137,5 +158,7 @@
 	    };
 	    player.handleInput(allowedKeys[e.keyCode]);
 	});
+
 	startButton.addEventListener('click', run);
+
 })();
