@@ -10,6 +10,21 @@ body {
     margin: 0;
     padding: 0;
 }
+.start_bttn {
+	padding: .8rem;
+	font-size: .8rem;
+	font-weight: bold;
+	color: #ffffff;
+	background: #63BF4F;
+	border: 0;
+	box-shadow: .2rem .2rem .2rem #000000;
+	text-shadow: .2rem .2rem .2rem #000000;
+	transition: all .3s linear;
+}
+.start_bttn:hover {
+	padding: .85rem;
+	font-size: .85rem;
+}
 .world_grid {
 	max-width: 30rem;
 	width: 30rem;
@@ -17,6 +32,7 @@ body {
 	box-shadow: inset .1rem .1rem 2rem red;
 	padding: 1rem 1rem 2rem 1rem;
 	overflow: hidden;
+	background: linear-gradient(to bottom, #566FD3, #D2D2C8, #63BF4F);
 	.bar,
 	.grid {
 		display: flex;
@@ -36,16 +52,28 @@ body {
 	position: relative;
 }
 .water_block {
-	box-shadow: 1rem 1rem 1rem #B53471;
-	background: #ED4C67;
+	// box-shadow: 1rem 1rem 1rem #B53471;
+	// background: #ED4C67;
+	background: url(../images/water-block.png);
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
 }
 .stone_block {
-	box-shadow: 1rem 1rem 1rem #8395a7;
-	background: #f1f2f6;
+	// box-shadow: 1rem 1rem 1rem #8395a7;
+	// background: #f1f2f6;
+	background: url(../images/stone-block.png);
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
 }
 .land_block {
-	box-shadow: 1rem 1rem 1rem #2ed573;
-	background: #7bed9f; 
+	// box-shadow: 1rem 1rem 1rem #2ed573;
+	// background: #7bed9f;
+	background: url(../images/grass-block.png);
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
 }
 .obstacle,
 #player {
@@ -53,9 +81,7 @@ body {
 	height: 100%;
 	width: 100%;
 	z-index: 1; //Bugs were moving under tiles
-}
-#player {
-	border: 1px solid white;
+	// border: 1px solid white;
 }
 /*.water_img,
 .stone_img,

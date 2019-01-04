@@ -9,6 +9,7 @@
 	NOTE 7.) GIVE PLAYER POINTS AND LIVES
 	NOTE 8.) CREATE A GAME STATE, FOR LEVELS
 	NOTE 9.) ADD NEW LEVELS, ADD COLLECTIBLES, EXTRA LIVES..
+	NOTE 10.) PREPEND ALL PROPERTIES WITH UNDERSCORES, CREATE SETTER AND GETTER METHODS FOR PROPERTIES THAT NEED TO BE ACCESSED LATER
 */
 (function() {
 	'use strict'
@@ -53,16 +54,19 @@
 			};
 		});
 	};
-	Obstacle.prototype.handleCollision = function() {//THIS MIGHT HAVE TO BE A OBSTACLE FUNCTION
+	Obstacle.prototype.handleCollision = function() {
 		var obstaclesHtmlCollection = document.getElementsByClassName('obstacle'),
 			obstaclesArray = Array.prototype.slice.call(obstaclesHtmlCollection),
 			$this = this;
 		obstaclesArray.forEach(function(el, i) {
 			var elBounding = el.getBoundingClientRect(),
 				playerBounding = document.getElementById('player').getBoundingClientRect();
-			if(elBounding.y === playerBounding.y && elBounding.x >= playerBounding.x) { //THINK ABOUT THIS ONE THOROUGHLY
-				//needs to check for exact x-axis and y-axis
-				console.log('bump');		
+			if(elBounding.y === playerBounding.y && elBounding.x >= playerBounding.x) {
+				var player = document.getElementById('player');
+				player.style.right = 0;
+				player.style.bottom = 0;
+				console.log('bump');
+				console.dir(player);
 			};
 		});
 	};
@@ -77,7 +81,6 @@
 		}, 5);
 		this.outOfBounds();
 		this.handleCollision();
-		//CHECK FOR COLLISIONS HERE AS WELL...
 	};
 
 	function reset() {
@@ -104,9 +107,10 @@
 		playerEl.src = this.cover;
 		playerEl.setAttribute('id',  'player');
 		this.activePlayer = playerEl;
-		playerStartLoc.appendChild(playerEl);
+		this.activePlayer.playerOptions = this;
+		playerStartLoc.appendChild(this.activePlayer);
 	};
-	// Player.prototype.movePlayer = function(direction) {
+	// Player.prototype.resetPos = function(direction) {
 		
 	// }
 	Player.prototype.handleInput = function(direction) {
@@ -116,6 +120,7 @@
 				this.jumpX = spaces;
 				var gameSpaces = this.jumpX + 'px';
 				this.activePlayer.style.right = gameSpaces;
+				// this.resetPos();
 			break;
 
 			case 'up':
@@ -123,6 +128,7 @@
 				this.jumpY = spaces;
 				var gameSpaces = this.jumpY + 'px';
 				this.activePlayer.style.bottom = gameSpaces;
+				// this.resetPos();
 			break;
 
 			case 'right':
@@ -130,6 +136,7 @@
 				this.jumpX = spaces;
 				var gameSpaces = this.jumpX + 'px';
 				this.activePlayer.style.right = gameSpaces;
+				// this.resetPos();
 			break;
 
 			case 'down':
@@ -137,6 +144,7 @@
 				this.jumpY = spaces;
 				var gameSpaces = this.jumpY + 'px';
 				this.activePlayer.style.bottom = gameSpaces;
+				// this.resetPos();
 			break;
 
 			default:
@@ -155,7 +163,7 @@
 
 	function run() {
 		gameOn = !gameOn;
-		if(gameOn) {2
+		if(gameOn) {
 			startButton.innerHTML = 'RESET';
 			repeatObstacles = setInterval(function() {
 				obstacle.createElement();
